@@ -91,7 +91,7 @@ for (i = 0; i < n; i++){
   if (F3[row][col] != NULL && F3[row][col] == S[i][j])
 
     }
-  if (F3[row][cow] != NULL && F3 == S[i][j])
+  if (F3[row][cow] != NULL && F3[row][col] == S[i][j])
 }
 */
 
