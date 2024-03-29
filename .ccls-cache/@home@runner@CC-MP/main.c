@@ -23,8 +23,6 @@ int main() {
       {{1, 5}, {2, 4}, {2, 5}, {2, 6}, {3, 5}},
       {{4, 1}, {4, 3}, {5, 1}, {5, 3}, {6, 1}, {6, 3}}}; // {{x, y}, {x, y}};
 
-  printf("(%d, %d)\n", S[0][0][0], S[0][0][1]);
-
   int C[2][2]; // Player X/O Valid Moves
 
   int F1[6][6] = {0}, F2[6][6] = {0}, F3[6][6] = {0}, C1[MAX][2] = {0},
@@ -76,8 +74,8 @@ int main() {
       scanf("%d", &col);
     } while (col < 0 && col >= 6);
 
-    c = ((fabs(row - 3)) / 2) + 1;
-    d = ((fabs(col - 3)) / 2) + 1;
+    c = (int)((fabs(row - 3)) / 2) + 1;
+    d = (int)((fabs(col - 3)) / 2) + 1;
 
     // SpaceChecker
     if (F3[row][col] == 0) {
@@ -95,28 +93,29 @@ int main() {
         C2_index++;
         player = playerX;
       }
+
+      // Storing Values in C1 & C2 (current scores)
+
+      int svalue = checkS(S, C, row, col);
+      if (F3[row][col] != 0 && player == playerX && svalue == 1) {
+        index1++; // comparison for scores for both players
+        if (index1 > 36)
+          indexC1++;
+        if (indexC1 > 2)
+          indexC1 = 0;
+      }
+      if (F3[row][col] != 0 && player == playerO && svalue == 1) {
+        index2++;
+        if (index2 > 36)
+          indexC2++;
+        if (indexC2 > 2)
+          indexC2 = 0;
+      }
+      printf("Player 1 Score: %d\n", index1);
+      printf("Player 2 Score: %d\n", index2);
     }
     // Check if in S Board
 
-    // Storing Values in C1 & C2 (current scores)
-
-    int svalue = checkS(S, C, row, col);
-    if (F3[row][col] != 0 && player == playerX && svalue == 1) {
-      index1++; // comparison for scores for both players
-      if (index1 > 36)
-        indexC1++;
-      if (indexC1 > 2)
-        indexC1 = 0;
-    }
-    if (F3[row][col] != 0 && player == playerO && svalue == 1) {
-      index2++;
-      if (index2 > 36)
-        indexC2++;
-      if (indexC2 > 2)
-        indexC2 = 0;
-    }
-    printf("Player 1 Score: %d\n", index1);
-    printf("Player 2 Score: %d\n", index2);
   } while (!over);
   // comparing scores
   if (index1 > index2) {
@@ -164,7 +163,8 @@ void dispBoard(int F3[][6]) {
 }
 
 int checkS(int S[][6][2], int C[][2], int inp_row, int inp_col) {
-
+  inp_row--;
+  inp_col--;
   int row, col, f; // f determines the x and y in (x, y)
   {
 
