@@ -6,7 +6,7 @@
 int main() {
   int good, over, next;
   int a, b, c, d;
-  int x, y; // Player Coords
+  int row, col, player_move = 1; // Player Coords
 
   char F[6][6]; // Display Board
 
@@ -15,7 +15,7 @@ int main() {
 
   int F1[6][6] = {0}, F2[6][6] = {0}, F3[6][6], C1[MAX][2] = {0},
       C2[MAX][2] = {0}; // Variables
-
+  int C1_index = 0, C2_index = 0;
   /*
 
   F3
@@ -47,21 +47,54 @@ int main() {
   */
   good = next = over = FALSE;
   do {
-    printf("Enter row: ");
-    scanf("%d", &y);
-  } while (y < 0 || y > 6);
+    printf("Enter Valid Coords (row, column): \n\n");
+    do {
+      printf("Enter row: ");
+      scanf("%d", &row);
+    } while (row < 0 || row > 6);
 
-  do {
-    printf("\nEnter col: ");
-    scanf("%d", &x);
-  } while (x < 0 || x > 6);
+    do {
+      printf("\nEnter col: ");
+      scanf("%d", &col);
+    } while (col < 0 || col > 6);
 
-  // check if F[y][x] is empty
-  // if F3[y][x] is empty = null, then put O or X
-  //
+    c = ((row - 3) / 2) + 1;
+    d = ((col - 3) / 2) + 1;
 
+  } while (c > 2 || d > 2); // Limiter
+
+  if (F3[row][col] == NULL) {
+    F3[row][col] = player_move;
+
+    if (player_move == 1) {
+      C1[C1_index][0] = c;
+      C1[C1_index][1] = d;
+      C1_index++;
+      player_move--;
+    } else {
+      C2[C2_index][0] = c;
+      C2[C2_index][1] = d;
+
+      C2_index++;
+      player_move++;
+    }
+  }
+  // check if F[row][col] is empty
+  // if F3[row][col] is empty = null, then put 1 and 0
+  // C1 and C2 stores the value if its correct
+  // loops till F3 is all null
+  // C1 > C2, p1 wins vice versa
   return 0;
 }
+/* for C1
+for (i = 0; i < n; i++){
+  if (F3[row][col] != NULL && F3[row][col] == S[i][j])
+
+    }
+  if (F3[row][cow] != NULL && F3 == S[i][j])
+}
+*/
+
 /* Linear Search
   for (i =0; i < n; i++)
   {
