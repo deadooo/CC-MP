@@ -31,35 +31,7 @@ int main() {
 
   int svalue = checkS(S, C, row, col);
   int index1 = 0, indexC1 = 0, index2 = 0, indexC2 = 0;
-  /*
 
-  F3
-  for (i = 0; i < n; i++){
-    for (j = 0; j < n; j++){
-      if (F[i][j] == F[x][y]){
-        F[i][j]
-
-
-      }
-    }
-  }
-
-  x y
-  1 3
-  F3[y][x] = O;
-
-  F3[x][y] = null;
-
-  if (F3[x][y] == null)
-
-  F3
-  board
-
-  x y  - -
-  0 0, 0 1, 0 2
-
-
-  */
   good = next = over = FALSE;
   do {
     dispBoard(F3);
@@ -67,17 +39,19 @@ int main() {
     do {
       printf("Enter row: ");
       scanf("%d", &row);
-    } while (row < 0 && row >= 6);
+    } while (row < 1 || row > 6);
 
     do {
       printf("\nEnter col: ");
       scanf("%d", &col);
-    } while (col < 0 && col >= 6);
+    } while (col < 1 || col > 6);
 
     c = (int)((fabs(row - 3)) / 2) + 1;
     d = (int)((fabs(col - 3)) / 2) + 1;
 
     // SpaceChecker
+    row--;
+    col--;
     if (F3[row][col] == 0) {
       F3[row][col] = player;
 
@@ -163,8 +137,8 @@ void dispBoard(int F3[][6]) {
 }
 
 int checkS(int S[][6][2], int C[][2], int inp_row, int inp_col) {
-  inp_row--;
-  inp_col--;
+  inp_row++;
+  inp_col++;
   int row, col, f; // f determines the x and y in (x, y)
   {
 
