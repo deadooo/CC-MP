@@ -15,10 +15,15 @@ int main() {
 
   char F[6][6]; // Display Board
 
-  int S[MAX][2] = {{1, 1}, {1, 3}}; // {{x, y}, {x, y}};
-  int C[2][2];                      // Player X/O Valid Moves
+  int S[4][6] = {
+      {(1, 1), (1, 3), (2, 2), (3, 1), (3, 3)},
+      {(4, 4), (4, 6), (5, 5), (6, 4), (6, 6)},
+      {(1, 5), (2, 4), (2, 5), (2, 6), (3, 5)},
+      {(4, 1), (4, 3), (5, 1), (5, 3), (6, 1), (6, 3)}
+}; // {{x, y}, {x, y}};
+  int C[2][2]; // Player X/O Valid Moves
 
-  int F1[6][6] = {0}, F2[6][6] = {0}, F3[6][6], C1[MAX][2] = {0},
+  int F1[6][6] = {0}, F2[6][6] = {0}, F3[6][6] = {0}, C1[MAX][2] = {0},
       C2[MAX][2] = {0}; // Variables
   int C1_index = 0, C2_index = 0;
   /*
@@ -51,66 +56,68 @@ int main() {
 
   */
   good = next = over = FALSE;
-
-  dispBoard(F3);
-  printf("Enter Valid Coords (row, column): \n\n");
   do {
-    printf("Enter row: ");
-    scanf("%d", &row);
-  } while (row < 0 || row >= 6);
+    dispBoard(F3);
+    printf("Enter Valid Coords (row, column): \n\n");
+    do {
+      printf("Enter row: ");
+      scanf("%d", &row);
+    } while (row < 0 || row >= 6);
 
-  do {
-    printf("\nEnter col: ");
-    scanf("%d", &col);
-  } while (col < 0 || col >= 6);
+    do {
+      printf("\nEnter col: ");
+      scanf("%d", &col);
+    } while (col < 0 || col >= 6);
 
-  c = ((row - 3) / 2) + 1;
-  d = ((col - 3) / 2) + 1;
+    c = ((row - 3) / 2) + 1;
+    d = ((col - 3) / 2) + 1;
 
-  // SpaceChecker
-  if (F3[row][col] == 0) {
-    F3[row][col] = player;
+    // SpaceChecker
+    if (F3[row][col] == 0) {
+      F3[row][col] = player;
 
-    if (player == playerX) {
-      C1[C1_index][0] = c;
-      C1[C1_index][1] = d;
-      C1_index++;
-      player = playerO;
-    } else {
-      C2[C2_index][0] = c;
-      C2[C2_index][1] = d;
+      if (player == playerX) {
+        C1[C1_index][0] = c;
+        C1[C1_index][1] = d;
+        C1_index++;
+        player = playerO;
+      } else {
+        C2[C2_index][0] = c;
+        C2[C2_index][1] = d;
 
-      C2_index++;
-      player = playerX;
+        C2_index++;
+        player = playerX;
+      }
     }
-  }
+    // Check if in S Board
 
-  // Storing Values in C1 & C2 (current scores)
-  int index1 = 0, indexC1 = 0, index2 = 0, indexC2 = 0;
-  if (F3[row][col] != 0 && player == playerX) {
-    C1[index1][indexC1] = c;
-    index1++;
-    if (index1 > 36)
-      indexC1++;
-    if (indexC1 > 2)
-      indexC1 = 0;
-  }
-  if (F3[row][col] != 0 && player == playerO) {
-    C2[index2][indexC2] = c;
-    index2++;
-    if (index2 > 36)
-      indexC2++;
-    if (indexC2 > 2)
-      indexC2 = 0;
-  }
+    // Storing Values in C1 & C2 (current scores)
+    int index1 = 0, indexC1 = 0, index2 = 0, indexC2 = 0;
+    if (F3[row][col] != 0 && player == playerX) {
+      C1[index1][indexC1] = c;
+      index1++; // comparison for scores for both players
+      if (index1 > 36)
+        indexC1++;
+      if (indexC1 > 2)
+        indexC1 = 0;
+    }
+    if (F3[row][col] != 0 && player == playerO) {
+      C2[index2][indexC2] = c;
+      index2++;
+      if (index2 > 36)
+        indexC2++;
+      if (indexC2 > 2)
+        indexC2 = 0;
+    }
 
-  for (i = 0;)
-    // check if F[row][col] is empty
-    // if F3[row][col] is empty = null, then put 1 and 0
-    // C1 and C2 stores the value if its correct
-    // loops till F3 is all null
-    // C1 > C2, p1 wins vice versa
-    return 0;
+    // if(C1 > C2){
+    //   printf("X Wins");
+    // }else if(C2 > C1){
+    //   printf("O Wins");
+    // }else{
+    //   printf("Tie");
+    // }
+  } while (!over);
 }
 
 void dispBoard(int F3[][6]) {
@@ -118,9 +125,9 @@ void dispBoard(int F3[][6]) {
   // board maker
   int row, col, col2;
   char playerr;
-  printf(" Tic Tac Deez Nuts Shenanigans\n\n")
-      // prints topmost row
-      printf("\n+");
+  printf(" Tic Tac Toe but not really\n\n");
+  // prints topmost row
+  printf("\n+");
   for (col = 0; col < 6; col++)
     printf("---+");
   printf("\n");
@@ -147,6 +154,30 @@ void dispBoard(int F3[][6]) {
   }
 }
 
+int checkS(int S[][2], int C[][2], int inp_row, int inp_col) {
+
+  int row, col;
+  {1, 1}, {1, 3}, {1, 4},
+      - - - - - -
+
+  {
+    {1, 1}, {1, 3}, {}
+  }
+  for (row = 0; row < 21, row++) {
+    for (col = 0; col < 2; col++) {
+      if (S[row][col] ==)
+    }
+  }
+  {}
+}
+
+/*Checking S
+for (i = 0; i < n; i++){
+
+  while ()
+}
+
+*/
 /* Linear Search
       for (i =0; i < n; i++)
       {
