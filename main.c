@@ -5,12 +5,14 @@
 #define playerX 1
 #define playerO 2
 
+void dispBoard(int F3[][6]);
+
 int main() {
   int good, over, next;
   int a, b, c, d;
   int row, col, // Player Coords
-      player = playerX; 
-  
+      player = playerX;
+
   char F[6][6]; // Display Board
 
   int S[MAX][2] = {{1, 1}, {1, 3}}; // {{x, y}, {x, y}};
@@ -50,21 +52,22 @@ int main() {
   */
   good = next = over = FALSE;
 
+  dispBoard(F3);
   printf("Enter Valid Coords (row, column): \n\n");
   do {
     printf("Enter row: ");
     scanf("%d", &row);
-  } while (row < 0 || row > 6);
+  } while (row < 0 || row >= 6);
 
   do {
     printf("\nEnter col: ");
     scanf("%d", &col);
-  } while (col < 0 || col > 6);
+  } while (col < 0 || col >= 6);
 
   c = ((row - 3) / 2) + 1;
   d = ((col - 3) / 2) + 1;
 
-  //SpaceChecker
+  // SpaceChecker
   if (F3[row][col] == 0) {
     F3[row][col] = player;
 
@@ -82,45 +85,90 @@ int main() {
     }
   }
 
-  
-  // check if F[row][col] is empty 
-  // if F3[row][col] is empty = null, then put 1 and 0
-  // C1 and C2 stores the value if its correct
-  // loops till F3 is all null
-  // C1 > C2, p1 wins vice versa
-  return 0;
-}
-/* for C1
-  if (F3[row][col] != NULL && player == playerX)
-    
-    }
-  if (F3[row][cow] != NULL && player == playerO){
-    
+  // Storing Values in C1 & C2 (current scores)
+  int index1 = 0, indexC1 = 0, index2 = 0, indexC2 = 0;
+  if (F3[row][col] != 0 && player == playerX) {
+    C1[index1][indexC1] = c;
+    index1++;
+    if (index1 > 36)
+      indexC1++;
+    if (indexC1 > 2)
+      indexC1 = 0;
   }
-*/
+  if (F3[row][col] != 0 && player == playerO) {
+    C2[index2][indexC2] = c;
+    index2++;
+    if (index2 > 36)
+      indexC2++;
+    if (indexC2 > 2)
+      indexC2 = 0;
+  }
+
+  for (i = 0;)
+    // check if F[row][col] is empty
+    // if F3[row][col] is empty = null, then put 1 and 0
+    // C1 and C2 stores the value if its correct
+    // loops till F3 is all null
+    // C1 > C2, p1 wins vice versa
+    return 0;
+}
+
+void dispBoard(int F3[][6]) {
+
+  // board maker
+  int row, col, col2;
+  char playerr;
+  printf(" Tic Tac Deez Nuts Shenanigans\n\n")
+      // prints topmost row
+      printf("\n+");
+  for (col = 0; col < 6; col++)
+    printf("---+");
+  printf("\n");
+
+  for (row = 0; row < 6; row++) {
+    // prints one row of characters with spacing
+    printf("|");
+    for (col = 0; col < 6; col++) {
+      if (F3[row][col] == 1)
+        playerr = 'O';
+      else if (F3[row][col] == 2)
+        playerr = 'X';
+      else
+        playerr = ' ';
+      printf(" %c |", playerr);
+    }
+    printf("\n");
+
+    // prints the lower border of the current index
+    printf("+");
+    for (col2 = 0; col2 < 6; col2++)
+      printf("---+");
+    printf("\n");
+  }
+}
 
 /* Linear Search
-  for (i =0; i < n; i++)
-  {
-    for (j = 0; j < 2; j++)
-      if (S[i][j] == x)
-  }
-
-  for (i = 0; i < 2; i++){
-    num = i;
-    if(S[i][num] == x){
-      num++;
-      if(S[i][num]){
-        printf("Found");
-      }else{
-        num--;
+      for (i =0; i < n; i++)
+      {
+        for (j = 0; j < 2; j++)
+          if (S[i][j] == x)
       }
-    }
-  }
+
+      for (i = 0; i < 2; i++){
+        num = i;
+        if(S[i][num] == x){
+          num++;
+          if(S[i][num]){
+            printf("Found");
+          }else{
+            num--;
+          }
+        }
+      }
 
 
 
-*/
+        */
 // whole board
 //  {(1,1), (1,2), (1,3), (1,4), (1,5), (1,6)},
 //  {(2,1), (2,2), (2,3), (2,4), (2,5), (2,6)},
@@ -138,4 +186,23 @@ int main() {
   {(1, 5), (2, 4), (2, 5), (2, 6), (3, 5)},
   {(4, 1), (4, 3), (5, 1), (5, 3), (6, 1), (6, 3)}
 }
+*/
+
+// FINISHED(USED)
+/* for C1 && C2
+int index1 = 0, C1_2 = 0, index2 = 0, C2_2 = 0;
+  if (F3[row][col] != NULL && player == playerX){
+    C1[index1][C1_2] == c;
+    C1_2++;
+    index1++;
+    if (C1_2 > 2)
+      C1_2 = 0;
+    }
+  if (F3[row][col] != NULL && player == playerO){
+    C2[index2][C2_2] == c;
+    index2++;
+    C2_2++;
+    if (C2_2 > 2)
+      C2_2 = 0;
+  }
 */
