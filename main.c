@@ -2,12 +2,15 @@
 #define MAX 36
 #define TRUE 1
 #define FALSE !TRUE
+#define playerX 1
+#define playerO 2
 
 int main() {
   int good, over, next;
   int a, b, c, d;
-  int row, col, player_move = 1; // Player Coords
-
+  int row, col, // Player Coords
+      player = playerX; 
+  
   char F[6][6]; // Display Board
 
   int S[MAX][2] = {{1, 1}, {1, 3}}; // {{x, y}, {x, y}};
@@ -46,40 +49,41 @@ int main() {
 
   */
   good = next = over = FALSE;
+
+  printf("Enter Valid Coords (row, column): \n\n");
   do {
-    printf("Enter Valid Coords (row, column): \n\n");
-    do {
-      printf("Enter row: ");
-      scanf("%d", &row);
-    } while (row < 0 || row > 6);
+    printf("Enter row: ");
+    scanf("%d", &row);
+  } while (row < 0 || row > 6);
 
-    do {
-      printf("\nEnter col: ");
-      scanf("%d", &col);
-    } while (col < 0 || col > 6);
+  do {
+    printf("\nEnter col: ");
+    scanf("%d", &col);
+  } while (col < 0 || col > 6);
 
-    c = ((row - 3) / 2) + 1;
-    d = ((col - 3) / 2) + 1;
+  c = ((row - 3) / 2) + 1;
+  d = ((col - 3) / 2) + 1;
 
-  } while (c > 2 || d > 2); // Limiter
+  //SpaceChecker
+  if (F3[row][col] == 0) {
+    F3[row][col] = player;
 
-  if (F3[row][col] == NULL) {
-    F3[row][col] = player_move;
-
-    if (player_move == 1) {
+    if (player == playerX) {
       C1[C1_index][0] = c;
       C1[C1_index][1] = d;
       C1_index++;
-      player_move--;
+      player = playerO;
     } else {
       C2[C2_index][0] = c;
       C2[C2_index][1] = d;
 
       C2_index++;
-      player_move++;
+      player = playerX;
     }
   }
-  // check if F[row][col] is empty
+
+  
+  // check if F[row][col] is empty 
   // if F3[row][col] is empty = null, then put 1 and 0
   // C1 and C2 stores the value if its correct
   // loops till F3 is all null
@@ -87,12 +91,12 @@ int main() {
   return 0;
 }
 /* for C1
-for (i = 0; i < n; i++){
-  if (F3[row][col] != NULL && F3[row][col] == S[i][j])
-
+  if (F3[row][col] != NULL && player == playerX)
+    
     }
-  if (F3[row][cow] != NULL && F3[row][col] == S[i][j])
-}
+  if (F3[row][cow] != NULL && player == playerO){
+    
+  }
 */
 
 /* Linear Search
