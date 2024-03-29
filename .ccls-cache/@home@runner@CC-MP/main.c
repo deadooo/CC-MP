@@ -1,11 +1,9 @@
 #include <stdio.h>
 
-int main() { 
+int main() {
+  int good, over, next;
+  int a, b, c, d;
   
-  return 0; 
-} //what 
 
-// dude do ctrl + i
-void nameless_function() {
-  
-}
+  return 0;
+} // just copy past
