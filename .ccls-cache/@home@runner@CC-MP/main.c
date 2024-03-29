@@ -17,7 +17,7 @@ int main() {
 
   char F[6][6]; // Display Board
 
-  int S[4][6][2] = {
+  int S[4][6][2] = { 
       {{1, 1}, {1, 3}, {2, 2}, {3, 1}, {3, 3}}, // Quadrant II (All works)
       {{4, 4}, {4, 6}, {5, 5}, {6, 4}, {6, 6}}, //  Quadrant IV(All Works)
       {{5, 1}, {4, 2}, {5, 2}, {6, 2}, {5, 3}}, // Quadrant III
@@ -68,7 +68,7 @@ int main() {
       }
 
       // Storing Values in C1 & C2 (current scores)
-
+      //once all wincons are met, make a condition to end game
       int svalue = checkS(S, C, row, col);
       if (F3[row][col] != 0 && player == playerX && svalue == 1) {
         index1++; // comparison for scores for both players
@@ -134,7 +134,7 @@ void dispBoard(int F3[][6]) {
     printf("\n");
   }
 }
-
+// hello po
 int checkS(int S[][6][2], int C[][2], int inp_row, int inp_col) {
   inp_row++;
   inp_col++;
