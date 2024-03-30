@@ -173,9 +173,12 @@ int gameOver(int F3[][6], int C1[][2], int C2[][2]) {
   int tempX1 = 0, tempX2 = 0, tempO1 = 0, tempO2 = 0;
 
   int count = 0;
-  for (int i = 0; i < 6; ++i) {
-    if (F3[i][0] + F3[i][1] > 0) {
-      count++;
+  for (int i = 0; i < 6; i++) {
+    for (int j = 0; j < 6; j++) {
+      if (F3[i][j] > 0)
+      {
+          count++;
+      }
     }
   }
 
