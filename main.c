@@ -9,7 +9,7 @@
 void dispBoard(int F3[][6]);
 int checkS(int S[][6][2], int C[][2], int inp_row, int inp_col);
 int gameOver(int F3[][6], int C1[][2], int C2[][2]);
-  
+
 int main() {
   int good, over, next;
   int a, b, c, d;
@@ -259,12 +259,12 @@ int gameOver(int F3[][6], int C1[][2], int C2[][2]) {
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
     if (tempX1 + tempX2 > tempO1 + tempO2) {
       printf("Player X, You Are The Winner.");
-      return 1;
+      return 0;
     } else {
       printf("Player O, You Are The Winner.");
-      return 1;
+      return 0;
     }
   }
-  return 0;
+  return 1;
   // hello
 }
