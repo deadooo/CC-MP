@@ -99,8 +99,7 @@ int main() {
       printf("Player 1 Score: %d\n", index1);
       printf("Player 2 Score: %d\n", index2);
     }
-
-  } while (!over || /*if gameover is true); // f1 + f2 = f3*/);
+  } while (!over || gameOver());
   // comparing scores
   return 0;
 } // end of main
@@ -158,12 +157,19 @@ int checkS(int S[][6][2], int C[][2], int inp_row, int inp_col) {
 }
 
 // Check C1 and C2 with the most Pairs = to P
-int gameOver(int F3[][6], int C1[][2]) {
-  int xPointsX = 0;
-  int xPointsY = 0;
+int gameOver(int F3[][6], int C1[][2], int C2[][2]) {
+  int xPointsA = 0;
+  int xPointsB = 0;
+  int xPointsC = 0;
+  int xPointsD = 0;
 
-  int oPointsX = 0;
-  int oPointsY = 0;
+  int oPointsA = 0;
+  int oPointsB = 0;
+  int oPointsC = 0;
+  int oPointsD = 0;
+
+  int difference = 0;
+  int tempX1 = 0, tempX2 = 0, tempO1 = 0, tempO2 = 0;
 
   int count = 0;
   for (int i = 0; i < 6; ++i) {
@@ -175,47 +181,82 @@ int gameOver(int F3[][6], int C1[][2]) {
   if (count == 36) {
     for (int i = 0; i < 36; i++) {
       if (C1[i][0] == 1 && C1[i][1] == 1) { // (1,1)
-        xPointsX++;
+        xPointsA++;
       } else if (C1[i][0] == 2 && C1[i][1] == 2) { // (2,2)
-        xPointsY++;
+        xPointsB++;
       } else if (C1[i][0] == 1 && C1[i][1] == 2) { // (1, 2)
-        oPointsX++;
+        xPointsC++;
       } else if (C1[i][0] == 2 && C1[i][1] == 1) { //(2, 1)
-        oPointsY++;
+        xPointsD++;
       } else {
       }
+      // O below
+      if (C2[i][0] == 1 && C1[i][1] == 1) {
+        if (C1[i][0] == 1 && C1[i][1] == 1) { // (1,1)
+          oPointsA++;
+        } else if (C1[i][0] == 2 && C1[i][1] == 2) { // (2,2)
+          xPointsB++;
+        } else if (C1[i][0] == 1 && C1[i][1] == 2) { // (1, 2)
+          oPointsC++;
+        } else if (C1[i][0] == 2 && C1[i][1] == 1) { //(2, 1)
+          oPointsD++;
+        } else {
+        }
+      }
     }
-    // tempx and tempO player Points
-    int difference = 0;
-    int tempX = 0;
-    int tempO = 0;
-    if (xPointsX > 0 && xPointsY > 0) {
-      if (xPointsX > xPointsY) {
-        difference = xPointsX - xPointsY;
-        tempX = xPointsX - difference;
-      } else if (xPointsY > xPointsX) {
-        difference = xPointsY - xPointsX;
-        tempX = xPointsY - difference;
+
+    if (xPointsA > 0 && xPointsB > 0) {
+      if (xPointsA > xPointsB) {
+        difference = xPointsA - xPointsB;
+        tempX1 = xPointsA - difference;
+      } else if (xPointsB > xPointsA) {
+        difference = xPointsB - xPointsA;
+        tempX1 = xPointsB - difference;
       } else { // Tie
-        tempX = xPointsX;
+        tempX1 = xPointsA;
       }
     }
     difference = 0;
-    if (oPointsX > 0 && oPointsY > 0) {
-      if (oPointsX > oPointsY) {
-        difference = oPointsX - oPointsY;
-        tempO = oPointsX - difference;
-      } else if (oPointsY > oPointsX) {
-        difference = oPointsY - oPointsX;
-        tempO = xPointsY - difference;
+    if (xPointsC > 0 && xPointsD > 0) {
+      if (xPointsC > xPointsD) {
+        difference = xPointsC - xPointsD;
+        tempX2 = xPointsC - difference;
+      } else if (xPointsD > xPointsC) {
+        difference = xPointsD - xPointsC;
+        tempX2 = xPointsD - difference;
       } else { // Tie
-        tempO = oPointsX;
+        tempX2 = xPointsC;
+      }
+    }
+    // O below
+    difference = 0;
+    if (oPointsA > 0 && oPointsB > 0) {
+      if (oPointsA > oPointsB) {
+        difference = oPointsA - oPointsB;
+        tempO1 = oPointsA - difference;
+      } else if (oPointsB > oPointsA) {
+        difference = oPointsB - oPointsA;
+        tempO1 = oPointsB - difference;
+      } else { // Tie
+        tempO1 = oPointsA;
+      }
+    }
+    difference = 0;
+    if (oPointsC > 0 && oPointsD > 0) {
+      if (oPointsC > oPointsD) {
+        difference = oPointsC - oPointsD;
+        tempO2 = oPointsC - difference;
+      } else if (oPointsD > oPointsC) {
+        difference = oPointsD - oPointsC;
+        tempO2 = oPointsD - difference;
+      } else { // Tie
+        tempO2 = oPointsC;
       }
     }
 
     // determine winner
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    if (tempX > tempO) {
+    if (tempX1 + tempX2 > tempO1 + tempO2) {
       printf("Player X, You Are The Winner.");
       return 1;
     } else {
