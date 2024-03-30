@@ -185,42 +185,45 @@ int gameOver(int F3[][6], int C1[][2]) {
       } else {
       }
     }
-    // xPointsX = 3 && xPointsY = 4
-    // Check if both points x and y are > 0
-    // For every x with y == 1 point for player
+    // tempx and tempO player Points
+    int difference = 0;
+    int tempX = 0;
+    int tempO = 0;
     if (xPointsX > 0 && xPointsY > 0) {
       if (xPointsX > xPointsY) {
-
+        difference = xPointsX - xPointsY;
+        tempX = xPointsX - difference;
       } else if (xPointsY > xPointsX) {
-
+        difference = xPointsY - xPointsX;
+        tempX = xPointsY - difference;
       } else { // Tie
+        tempX = xPointsX;
+      }
+    }
+    difference = 0;
+    if (oPointsX > 0 && oPointsY > 0) {
+      if (oPointsX > oPointsY) {
+        difference = oPointsX - oPointsY;
+        tempO = oPointsX - difference;
+      } else if (oPointsY > oPointsX) {
+        difference = oPointsY - oPointsX;
+        tempO = xPointsY - difference;
+      } else { // Tie
+        tempO = oPointsX;
       }
     }
 
-    if (oPointsX > 0 && oPointsY > 0) {
+    // determine winner
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    if (tempX > tempO) {
+      printf("Player X, You Are The Winner.");
+      return 1;
+    } else {
+      printf("Player O, You Are The Winner.");
+      return 1;
     }
   }
-
-  /*
-    int temp[2];
-    if (count) {
-      for (int i = 0; i < 21; i++) {
-        if (C1[i][0] == 1 || C1[i][0] == 2) {
-
-        }
-
-      }
-    }
-  */
-  // if (index1 > index2) {
-  //   printf("Player 1 wins");
-  // }
-
-  // if (index2 > index1) {
-  //   printf("Player 2 wins");
-  // }
-}
-return 0;
+  return 0;
 }
 
 //   X O
