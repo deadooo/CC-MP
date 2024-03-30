@@ -17,16 +17,17 @@ int main() {
 
   char F[6][6]; // Display Board
 
-  int S[4][6][2] = { 
+  int S[4][6][2] = {
       {{1, 1}, {1, 3}, {2, 2}, {3, 1}, {3, 3}}, // Quadrant II (All works)
       {{4, 4}, {4, 6}, {5, 5}, {6, 4}, {6, 6}}, //  Quadrant IV(All Works)
       {{5, 1}, {4, 2}, {5, 2}, {6, 2}, {5, 3}}, // Quadrant III
       {{1, 4}, {1, 5}, {1, 6}, {3, 4}, {3, 5}, {3, 6}}}; // Quadrant I
   int C[2][2]; // Player X/O Valid Moves
 
-  int F1[6][6] = {0}, F2[6][6] = {0}, F3[6][6] = {0}, C1[MAX][2] = {0},
-      C2[MAX][2] = {0}; // Variables
+  int F1[36][2] = {0}, F2[36][2] = {0}, F3[6][6] = {0}, C1[21][2] = {0},
+      C2[21][2] = {0}; // Variables
   int C1_index = 0, C2_index = 0;
+  int F1_index = 0, F2_index = 0;
 
   int svalue = checkS(S, C, row, col);
   int index1 = 0, indexC1 = 0, index2 = 0, indexC2 = 0;
@@ -55,29 +56,40 @@ int main() {
       F3[row][col] = player;
 
       if (player == playerX) {
+        F1[F1_index][0] = row;
+        F1[F1_index][1] = col;
         C1[C1_index][0] = c;
         C1[C1_index][1] = d;
+
+        F1_index++;
         C1_index++;
         player = playerO;
       } else {
+        F2[F2_index][0] = row;
+        F2[F2_index][1] = col;
         C2[C2_index][0] = c;
         C2[C2_index][1] = d;
 
+        F2_index++;
         C2_index++;
         player = playerX;
       }
 
       // Storing Values in C1 & C2 (current scores)
-      //once all wincons are met, make a condition to end game
+      // once all wincons are met, make a condition to end game
       int svalue = checkS(S, C, row, col);
-      if (F3[row][col] != 0 && player == playerX && svalue == 1) {
+      if (F3[row][col] != 0 && player != playerX && svalue == 1) {
+        C1[index1][0] = c;
+        C1[index1][1] = d;
         index1++; // comparison for scores for both players
         if (index1 > 36)
           indexC1++;
         if (indexC1 > 2)
           indexC1 = 0;
       }
-      if (F3[row][col] != 0 && player == playerO && svalue == 1) {
+      if (F3[row][col] != 0 && player != playerO && svalue == 1) {
+        C2[index2][0] = c;
+        C2[index2][1] = d;
         index2++;
         if (index2 > 36)
           indexC2++;
@@ -87,17 +99,9 @@ int main() {
       printf("Player 1 Score: %d\n", index1);
       printf("Player 2 Score: %d\n", index2);
     }
-    // Check if in S Board
 
-  } while (!over);
+  } while (!over || /*if gameover is true); // f1 + f2 = f3*/);
   // comparing scores
-  if (index1 > index2) {
-    printf("Player 1 wins");
-  }
-  if (index2 > index1) {
-    printf("Player 2 wins");
-  }
-
   return 0;
 } // end of main
 
@@ -134,7 +138,7 @@ void dispBoard(int F3[][6]) {
     printf("\n");
   }
 }
-// hello po
+
 int checkS(int S[][6][2], int C[][2], int inp_row, int inp_col) {
   inp_row++;
   inp_col++;
@@ -151,6 +155,72 @@ int checkS(int S[][6][2], int C[][2], int inp_row, int inp_col) {
 
     return 0;
   }
+}
+
+// Check C1 and C2 with the most Pairs = to P
+int gameOver(int F3[][6], int C1[][2]) {
+  int xPointsX = 0;
+  int xPointsY = 0;
+
+  int oPointsX = 0;
+  int oPointsY = 0;
+
+  int count = 0;
+  for (int i = 0; i < 6; ++i) {
+    if (F3[i][0] + F3[i][1] > 0) {
+      count++;
+    }
+  }
+
+  if (count == 36) {
+    for (int i = 0; i < 36; i++) {
+      if (C1[i][0] == 1 && C1[i][1] == 1) { // (1,1)
+        xPointsX++;
+      } else if (C1[i][0] == 2 && C1[i][1] == 2) { // (2,2)
+        xPointsY++;
+      } else if (C1[i][0] == 1 && C1[i][1] == 2) { // (1, 2)
+        oPointsX++;
+      } else if (C1[i][0] == 2 && C1[i][1] == 1) { //(2, 1)
+        oPointsY++;
+      } else {
+      }
+    }
+    // xPointsX = 3 && xPointsY = 4
+    // Check if both points x and y are > 0
+    // For every x with y == 1 point for player
+    if (xPointsX > 0 && xPointsY > 0) {
+      if (xPointsX > xPointsY) {
+
+      } else if (xPointsY > xPointsX) {
+
+      } else { // Tie
+      }
+    }
+
+    if (oPointsX > 0 && oPointsY > 0) {
+    }
+  }
+
+  /*
+    int temp[2];
+    if (count) {
+      for (int i = 0; i < 21; i++) {
+        if (C1[i][0] == 1 || C1[i][0] == 2) {
+
+        }
+
+      }
+    }
+  */
+  // if (index1 > index2) {
+  //   printf("Player 1 wins");
+  // }
+
+  // if (index2 > index1) {
+  //   printf("Player 2 wins");
+  // }
+}
+return 0;
 }
 
 //   X O
