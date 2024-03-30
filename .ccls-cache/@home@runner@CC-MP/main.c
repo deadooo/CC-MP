@@ -8,7 +8,8 @@
 
 void dispBoard(int F3[][6]);
 int checkS(int S[][6][2], int C[][2], int inp_row, int inp_col);
-
+int gameOver(int F3[][6], int C1[][2], int C2[][2]);
+  
 int main() {
   int good, over, next;
   int a, b, c, d;
@@ -99,7 +100,7 @@ int main() {
       printf("Player 1 Score: %d\n", index1);
       printf("Player 2 Score: %d\n", index2);
     }
-  } while (!over || gameOver());
+  } while (!over || gameOver(F3, C1, C2));
   // comparing scores
   return 0;
 } // end of main
@@ -265,73 +266,5 @@ int gameOver(int F3[][6], int C1[][2], int C2[][2]) {
     }
   }
   return 0;
+  // hello
 }
-
-//   X O
-//   O X
-/*Checking S
-for (i = 0; i < n; i++){
-
-  while ()
-}
-
-*/
-/* Linear Search
-      for (i =0; i < n; i++)
-      {
-        for (j = 0; j < 2; j++)
-          if (S[i][j] == x)
-      }
-
-      for (i = 0; i < 2; i++){
-        num = i;
-        if(S[i][num] == x){
-          num++;
-          if(S[i][num]){
-            printf("Found");
-          }else{
-            num--;
-          }
-        }
-      }
-
-
-
-        */
-// whole board
-//  {(1,1), (1,2), (1,3), (1,4), (1,5), (1,6)},
-//  {(2,1), (2,2), (2,3), (2,4), (2,5), (2,6)},
-//  {(3,1), (3,2), (3,3), (3,4), (3,5), (3,6)},
-//  {(4,1), (4,2), (4,3), (4,4), (4,5), (4,6)},
-//  {(5,1), (5,2), (5,3), (5,4), (5,5), (5,6)},
-//  {(6,1), (6,2), (6,3), (6,4), (6,5), (6,6)};
-
-// correct values
-
-/*
-{
-{(1,1), (1, 3), (2, 2), (3, 1), (3, 3)},
-  {(4, 4), (4, 6), (5, 5), (6, 4), (6,6)},
-  {(1, 5), (2, 4), (2, 5), (2, 6), (3, 5)},
-  {(4, 1), (4, 3), (5, 1), (5, 3), (6, 1), (6, 3)}
-}
-*/
-
-// FINISHED(USED)
-/* for C1 && C2
-int index1 = 0, C1_2 = 0, index2 = 0, C2_2 = 0;
-  if (F3[row][col] != NULL && player == playerX){
-    C1[index1][C1_2] == c;
-    C1_2++;
-    index1++;
-    if (C1_2 > 2)
-      C1_2 = 0;
-    }
-  if (F3[row][col] != NULL && player == playerO){
-    C2[index2][C2_2] == c;
-    index2++;
-    C2_2++;
-    if (C2_2 > 2)
-      C2_2 = 0;
-  }
-*/
